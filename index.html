@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardiovascular Physiology Board-Style Practice Examination</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .tab-active { border-color: #f43f5e; color: #f43f5e; background-color: rgba(244, 63, 94, 0.08); }
+    @media print {
+      header, nav, #quickNavSection, .filter-buttons-bar, #downloadHtmlBtn, #resetAllBtn { display: none !important; }
+      body { background-color: #ffffff !important; color: #000000 !important; }
+      .bg-slate-900, .bg-slate-950, .bg-slate-800 { background-color: #ffffff !important; color: #000000 !important; border-color: #cccccc !important; }
+      .text-white, .text-slate-200, .text-slate-300 { color: #111111 !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-rose-500 selection:text-white">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 shadow-xl">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-500/25">
+          <i class="fa-solid fa-heart-pulse text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-base sm:text-lg text-white leading-tight">Cardiovascular Physiology Board Examination</h1>
+          <p class="text-xs text-slate-400">50 Questions &bull; Matching, Short/Long Answer, &amp; 47 Balanced MCQs</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div class="text-right hidden sm:block">
+          <div class="text-xs text-slate-400 font-medium">MCQ Progress</div>
+          <div class="text-sm sm:text-base font-bold text-rose-400" id="headerScore">0 / 47 (0%)</div>
+        </div>
+        <button id="downloadHtmlBtn" class="px-3 py-1.5 rounded-lg border border-rose-500/40 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 text-xs font-semibold transition flex items-center gap-1.5">
+          <i class="fa-solid fa-download"></i><span class="hidden md:inline">Download File</span>
+        </button>
+        <button id="resetAllBtn" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 font-medium transition">
+          <i class="fa-solid fa-arrow-rotate-right mr-1.5"></i>Reset
+        </button>
+      </div>
+    </div>
+    <!-- Progress Bar -->
+    <div class="w-full bg-slate-800 h-1.5">
+      <div id="quizProgressBar" class="bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-400 h-1.5 transition-all duration-300" style="width: 0%"></div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-slate-900/70 border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 flex space-x-2 sm:space-x-4 overflow-x-auto text-sm font-semibold">
+      <button id="tabBtnMatching" class="nav-tab py-3 px-4 border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition">
+        Part I: Matching (Q1)
+      </button>
+      <button id="tabBtnWritten" class="nav-tab py-3 px-4 border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition">
+        Part II: Written (Q2–3)
+      </button>
+      <button id="tabBtnMCQ" class="nav-tab py-3 px-4 border-b-2 border-rose-500 text-rose-400 tab-active transition">
+        Part III: MCQs (Q4–50)
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- ================= PART I: MATCHING (Q1) ================= -->
+    <section id="sectionMatching" class="hidden space-y-6">
+      <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-6 shadow-xl">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-5">
+          <div>
+            <span class="inline-block text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-md border border-rose-500/20 mb-2">
+              Question 1 &bull; High-Yield Electrophysiology Matching
+            </span>
+            <h2 class="text-lg font-bold text-white">Match Action Potential Phases with Primary Ionic Currents</h2>
+            <p class="text-xs text-slate-400 mt-1">Select the correct ionic mechanism for each phase and click "Evaluate Matching".</p>
+          </div>
+          <span id="matchingBadge" class="text-xs bg-slate-800 text-slate-400 px-3 py-1 rounded-full border border-slate-700">Unsubmitted</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="matchingItemsContainer">
+          <!-- Item 1 -->
+          <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/70">
+            <label class="block text-sm font-semibold text-slate-200 mb-2">1. Ventricular Phase 0 (Rapid Upstroke)</label>
+            <select id="match-1" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs sm:text-sm text-slate-200 focus:ring-2 focus:ring-rose-500 outline-none">
+              <option value="">-- Select Current / Mechanism --</option>
+              <option value="A">A. Opening of voltage-gated L-type Ca2+ channels balancing outward K+ efflux</option>
+              <option value="B">B. Rapid activation of voltage-gated Na+ channels (INa)</option>
+              <option value="C">C. Inactivation of Na+ channels with transient outward K+ current (Ito)</option>
+              <option value="D">D. Inward current through HCN channels (If, "funny") + T/L-type Ca2+ entry</option>
+              <option value="E">E. Closure of Ca2+ channels and delayed rectifier outward K+ efflux (IKr, IKs)</option>
+            </select>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/70">
+            <label class="block text-sm font-semibold text-slate-200 mb-2">2. Ventricular Phase 2 (Plateau)</label>
+            <select id="match-2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs sm:text-sm text-slate-200 focus:ring-2 focus:ring-rose-500 outline-none">
+              <option value="">-- Select Current / Mechanism --</option>
+              <option value="A">A. Opening of voltage-gated L-type Ca2+ channels balancing outward K+ efflux</option>
+              <option value="B">B. Rapid activation of voltage-gated Na+ channels (INa)</option>
+              <option value="C">C. Inactivation of Na+ channels with transient outward K+ current (Ito)</option>
+              <option value="D">D. Inward current through HCN channels (If, "funny") + T/L-type Ca2+ entry</option>
+              <option value="E">E. Closure of Ca2+ channels and delayed rectifier outward K+ efflux (IKr, IKs)</option>
+            </select>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/70">
+            <label class="block text-sm font-semibold text-slate-200 mb-2">3. Pacemaker Phase 4 (Prepotential)</label>
+            <select id="match-3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs sm:text-sm text-slate-200 focus:ring-2 focus:ring-rose-500 outline-none">
+              <option value="">-- Select Current / Mechanism --</option>
+              <option value="A">A. Opening of voltage-gated L-type Ca2+ channels balancing outward K+ efflux</option>
+              <option value="B">B. Rapid activation of voltage-gated Na+ channels (INa)</option>
+              <option value="C">C. Inactivation of Na+ channels with transient outward K+ current (Ito)</option>
+              <option value="D">D. Inward current through HCN channels (If, "funny") + T/L-type Ca2+ entry</option>
+              <option value="E">E. Closure of Ca2+ channels and delayed rectifier outward K+ efflux (IKr, IKs)</option>
+            </select>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/70">
+            <label class="block text-sm font-semibold text-slate-200 mb-2">4. Ventricular Phase 3 (Rapid Repolarization)</label>
+            <select id="match-4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs sm:text-sm text-slate-200 focus:ring-2 focus:ring-rose-500 outline-none">
+              <option value="">-- Select Current / Mechanism --</option>
+              <option value="A">A. Opening of voltage-gated L-type Ca2+ channels balancing outward K+ efflux</option>
+              <option value="B">B. Rapid activation of voltage-gated Na+ channels (INa)</option>
+              <option value="C">C. Inactivation of Na+ channels with transient outward K+ current (Ito)</option>
+              <option value="D">D. Inward current through HCN channels (If, "funny") + T/L-type Ca2+ entry</option>
+              <option value="E">E. Closure of Ca2+ channels and delayed rectifier outward K+ efflux (IKr, IKs)</option>
+            </select>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/70 md:col-span-2">
+            <label class="block text-sm font-semibold text-slate-200 mb-2">5. Ventricular Phase 1 (Transient Early Repolarization)</label>
+            <select id="match-5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs sm:text-sm text-slate-200 focus:ring-2 focus:ring-rose-500 outline-none">
+              <option value="">-- Select Current / Mechanism --</option>
+              <option value="A">A. Opening of voltage-gated L-type Ca2+ channels balancing outward K+ efflux</option>
+              <option value="B">B. Rapid activation of voltage-gated Na+ channels (INa)</option>
+              <option value="C">C. Inactivation of Na+ channels with transient outward K+ current (Ito)</option>
+              <option value="D">D. Inward current through HCN channels (If, "funny") + T/L-type Ca2+ entry</option>
+              <option value="E">E. Closure of Ca2+ channels and delayed rectifier outward K+ efflux (IKr, IKs)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-between">
+          <button id="btnCheckMatching" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-rose-600/30">
+            Evaluate Matching
+          </button>
+          <button id="btnResetMatching" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium rounded-xl text-xs transition border border-slate-700">
+            Clear Matching
+          </button>
+        </div>
+
+        <div id="matchingFeedbackBox" class="hidden mt-6 p-4 rounded-xl border"></div>
+      </div>
+    </section>
+
+    <!-- ================= PART II: WRITTEN (Q2 & Q3) ================= -->
+    <section id="sectionWritten" class="hidden space-y-8">
+      <!-- Question 2: Short Answer -->
+      <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-6 shadow-xl">
+        <span class="inline-block text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-md border border-rose-500/20 mb-2">
+          Question 2 &bull; Short Answer Clinical Correlation
+        </span>
+        <h3 class="text-base sm:text-lg font-bold text-white mb-2">Cellular Mechanism of Hyperkalemic QRS Widening</h3>
+        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+          <strong>Clinical Scenario:</strong> A 62-year-old male with end-stage renal disease misses two consecutive hemodialysis sessions. Serum potassium is 7.8 mEq/L. An ECG reveals tall peaked T waves, loss of P waves, and marked QRS prolongation.
+          <br /><br />
+          <strong>Prompt:</strong> Explain the cellular mechanism by which severe hyperkalemia impairs myocardial conduction velocity and broadens the QRS complex.
+        </p>
+
+        <textarea id="saAnswerInput" rows="4" placeholder="Type your pathophysiological explanation here..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3.5 text-sm text-slate-200 focus:ring-2 focus:ring-rose-500 outline-none mb-3"></textarea>
+        
+        <div class="flex items-center space-x-3">
+          <button id="btnRevealSA" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg transition shadow-md">
+            Show Model Answer &amp; Grading Rubric
+          </button>
+        </div>
+
+        <div id="saModelAnswer" class="hidden mt-4 p-4 rounded-xl bg-slate-800/80 border border-emerald-500/40 text-xs sm:text-sm text-slate-200 space-y-2">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check"></i> High-Yield Board Model Answer:
+          </div>
+          <ul class="list-disc pl-5 space-y-1.5 text-slate-300">
+            <li><strong>Resting Potential Shift:</strong> Elevated extracellular K+ shifts the potassium Nernst potential (E<sub>K</sub>) in a positive direction, partially depolarizing resting membrane potential (e.g., from -90 mV toward -65 mV).</li>
+            <li><strong>Voltage-Gated Na+ Channel Inactivation:</strong> Sustained baseline depolarization traps a large fraction of fast voltage-gated Na+ channels in their closed, inactivated state.</li>
+            <li><strong>Reduced dV/dt<sub>max</sub>:</strong> During excitation, fewer Na+ channels are available to open, markedly diminishing the Phase 0 upstroke velocity (dV/dt<sub>max</sub>).</li>
+            <li><strong>ECG Manifestation:</strong> Slower intraventricular electrical conduction velocity across myocytes prolongs total ventricular depolarization time, widening the QRS complex.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Question 3: Long Answer -->
+      <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-6 shadow-xl">
+        <span class="inline-block text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-md border border-rose-500/20 mb-2">
+          Question 3 &bull; Integrative Long-Answer Essay
+        </span>
+        <h3 class="text-base sm:text-lg font-bold text-white mb-2">Hemodynamic &amp; Neurohumoral Compensation in Acute Hemorrhage</h3>
+        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+          <strong>Clinical Scenario:</strong> A 24-year-old trauma victim experiences a femoral artery laceration and loses 1200 mL of whole blood within 10 minutes.
+          <br /><br />
+          <strong>Prompt:</strong> Detail the hemodynamic sequence immediately following blood loss and describe the compensatory neurohumoral reflex responses that act to restore mean arterial pressure and cardiac output. Address:
+          <ol class="list-decimal pl-5 mt-2 space-y-1 text-xs sm:text-sm text-slate-300">
+            <li>Primary shifts in the Guyton cardiac and vascular function curves.</li>
+            <li>The arterial baroreceptor reflex arc and efferent autonomic adjustments.</li>
+            <li>Endocrine compensation via RAAS and vasopressin.</li>
+          </ol>
+        </p>
+
+        <textarea id="laAnswerInput" rows="6" placeholder="Structure your response addressing Guyton curves, baroreceptors, and endocrine reflexes..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3.5 text-sm text-slate-200 focus:ring-2 focus:ring-rose-500 outline-none mb-3"></textarea>
+        
+        <div class="flex items-center space-x-3">
+          <button id="btnRevealLA" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg transition shadow-md">
+            Show Comprehensive Rubric &amp; Solution
+          </button>
+        </div>
+
+        <div id="laModelAnswer" class="hidden mt-4 p-5 rounded-xl bg-slate-800/80 border border-emerald-500/40 text-xs sm:text-sm text-slate-200 space-y-3">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check"></i> Complete Grading Rubric &amp; Breakdown:
+          </div>
+          <div class="space-y-2 text-slate-300">
+            <div>
+              <strong class="text-white">1. Guyton Hemodynamic Analysis:</strong>
+              <p>Blood loss acutely lowers mean systemic filling pressure (P<sub>mc</sub>), shifting the vascular function curve leftward/downward in parallel. Right atrial pressure and venous return decline, reducing end-diastolic volume (preload). Via the Frank-Starling mechanism, stroke volume and cardiac output drop, triggering immediate arterial hypotension.</p>
+            </div>
+            <div>
+              <strong class="text-white">2. Arterial Baroreflex &amp; Efferent Adjustments:</strong>
+              <p>Reduced pulsatile stretch in the carotid sinus (CN IX) and aortic arch (CN X) lowers afferent firing to the medullary NTS. This suppresses cardioinhibitory vagal centers and disinhibits the rostral ventrolateral medulla (RVLM):</p>
+              <ul class="list-disc pl-5 mt-1 space-y-1">
+                <li><em>Cardiac &beta;<sub>1</sub> activation:</em> Increases heart rate, AV conduction, and inotropy (rotating cardiac function curve upward/counterclockwise).</li>
+                <li><em>Vascular &alpha;<sub>1</sub> activation:</em> Constricts resistance arterioles (increasing SVR) and venoconstricts capacitance reservoirs to restore effective circulating volume.</li>
+              </ul>
+            </div>
+            <div>
+              <strong class="text-white">3. Endocrine Compensation:</strong>
+              <p>Renal hypoperfusion and renal &beta;<sub>1</sub> activation release renin, driving Angiotensin II production (&alpha;<sub>1</sub>-like arteriolar constriction and aldosterone-mediated Na+/fluid retention). Unloaded baroreceptors also stimulate posterior pituitary ADH (vasopressin) release, activating vascular V<sub>1</sub> receptors (vasoconstriction) and collecting duct V<sub>2</sub> receptors (water retention).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART III: MCQs (Q4–50) ================= -->
+    <section id="sectionMCQ" class="space-y-6">
+      
+      <!-- MCQ Controls Bar -->
+      <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-5 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 filter-buttons-bar">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <span>Multiple Choice Examination</span>
+              <span id="answeredCounterBadge" class="text-xs bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full border border-rose-500/30">0/47 Answered</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Select an option to evaluate your clinical reasoning and view detailed board rationales.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white shadow-sm transition">
+              All (47)
+            </button>
+            <button data-filter="incorrect" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition border border-slate-700">
+              Missed (<span id="missedCount">0</span>)
+            </button>
+            <button data-filter="unanswered" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition border border-slate-700">
+              Unanswered (<span id="unansweredCount">47</span>)
+            </button>
+          </div>
+        </div>
+
+        <!-- Jump to question quick nav -->
+        <div id="quickNavSection" class="mt-4 pt-4 border-t border-slate-800">
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-2">Jump to Question:</span>
+          <div id="quickNavContainer" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+
+      <!-- MCQ Container -->
+      <div id="mcqContainer" class="space-y-6"></div>
+
+      <!-- Final Results Banner -->
+      <section id="resultsSection" class="hidden mt-12 bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl border border-slate-800 p-8 text-center shadow-2xl">
+        <div class="inline-flex p-4 rounded-full bg-rose-500/10 text-rose-400 text-3xl mb-4 border border-rose-500/20">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-1">Examination Completed!</h3>
+        <p class="text-slate-400 text-sm max-w-lg mx-auto mb-6">Review your performance across electrophysiology, hemodynamics, microcirculation, and Guyton curves.</p>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+            <div class="text-2xl font-black text-white" id="finalTotal">0/47</div>
+            <div class="text-xs text-slate-400 font-medium mt-0.5">MCQ Score</div>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+            <div class="text-2xl font-black text-rose-400" id="finalPercent">0%</div>
+            <div class="text-xs text-slate-400 font-medium mt-0.5">Percentage</div>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+            <div class="text-2xl font-black text-emerald-400" id="finalPassed">Pass</div>
+            <div class="text-xs text-slate-400 font-medium mt-0.5">Board Status</div>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+            <div class="text-2xl font-black text-amber-400" id="finalKeyDist">Balanced</div>
+            <div class="text-xs text-slate-400 font-medium mt-0.5">Key Distribution</div>
+          </div>
+        </div>
+
+        <button id="restartBtn" class="px-6 py-2.5 bg-rose-600 hover:bg-rose-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition">
+          Retake MCQs
+        </button>
+      </section>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+    Cardiovascular Physiology Board Examination &bull; 50 Questions &bull; Single-File Offline Web Application
+  </footer>
+
+  <script>
+    // 47 Board Multiple Choice Questions (Questions 4 to 50)
+    // Keys are balanced: A=12, B=12, C=12, D=11
+    const mcqData = [
+      {
+        id: 4,
+        topic: "Cardiac Hemodynamics",
+        question: "A 45-year-old female presents for routine examination. Cardiac catheterization reveals a resting end-diastolic volume (EDV) of 120 mL and an end-systolic volume (ESV) of 48 mL. What is her calculated ejection fraction (EF)?",
+        options: [
+          { letter: "A", text: "60%", isCorrect: true, rationale: "Stroke Volume SV = EDV - ESV = 120 - 48 = 72 mL. Ejection Fraction EF = (SV / EDV) * 100% = (72 / 120) * 100% = 60%." },
+          { letter: "B", text: "40%", isCorrect: false, rationale: "40% represents the residual volume fraction (ESV / EDV = 48 / 120 = 40%), not the fraction of blood ejected." },
+          { letter: "C", text: "50%", isCorrect: false, rationale: "50% would correspond to a stroke volume of 60 mL from an EDV of 120 mL." },
+          { letter: "D", text: "72%", isCorrect: false, rationale: "72% confuses the absolute numerical stroke volume in mL (72 mL) with the percentage." }
+        ]
+      },
+      {
+        id: 5,
+        topic: "Heart Sounds",
+        question: "A 70-year-old male with long-standing hypertension is found to have an audible fourth heart sound (S4) on cardiac auscultation. What is the underlying pathophysiological cause of this sound?",
+        options: [
+          { letter: "A", text: "Rapid passive ventricular filling into a compliant, volume-overloaded cavity", isCorrect: false, rationale: "This describes an S3 heart sound ('ventricular gallop'), which occurs during early diastole in volume-overloaded ventricles." },
+          { letter: "B", text: "Atrial contraction forcing blood into a stiff, hypertrophied ventricle", isCorrect: true, rationale: "An S4 sound ('atrial gallop') occurs in late diastole coincident with atrial systole ('atrial kick'). It is generated when atria contract against a stiffened, non-compliant ventricular wall (e.g., concentric LV hypertrophy from hypertension)." },
+          { letter: "C", text: "Sudden tensing of chordae tendineae during early isovolumetric contraction", isCorrect: false, rationale: "Tensing of chordae and AV valve closure produces S1, not S4." },
+          { letter: "D", text: "Delayed closure of the pulmonic valve during deep inspiration", isCorrect: false, rationale: "Delayed closure of the pulmonic valve during inspiration produces physiologic splitting of S2." }
+        ]
+      },
+      {
+        id: 6,
+        topic: "Cardiac Electrophysiology",
+        question: "During a microneurography study, an investigator infuses a pharmacological agent that selectively blocks hyperpolarization-activated cyclic nucleotide-gated (HCN) channels in nodal tissue. Which of the following alterations will be observed in sinoatrial nodal cells?",
+        options: [
+          { letter: "A", text: "Accelerated Phase 0 upstroke velocity", isCorrect: false, rationale: "Phase 0 upstroke in the SA node is carried by voltage-gated L-type Ca2+ channels, not HCN channels." },
+          { letter: "B", text: "Increased slope of Phase 4 diastolic depolarization", isCorrect: false, rationale: "Blocking an inward depolarizing current decreases the slope of Phase 4 rather than increasing it." },
+          { letter: "C", text: "Decreased slope of Phase 4 depolarization and reduced heart rate", isCorrect: true, rationale: "HCN channels carry the funny current (If), an inward mixed Na+/K+ current activated by hyperpolarization. Blocking If flattens the Phase 4 prepotential slope, prolonging the time to reach threshold and decreasing heart rate (negative chronotropy)." },
+          { letter: "D", text: "Complete arrest of Phase 2 calcium plateau entry", isCorrect: false, rationale: "Pacemaker cells lack a Phase 2 plateau; plateau entry is characteristic of ventricular contractile myocytes." }
+        ]
+      },
+      {
+        id: 7,
+        topic: "Electrocardiography",
+        question: "On an electrocardiogram tracing from an adult patient, the time from the onset of the P wave to the initial deflection of the QRS complex is measured at 0.28 seconds. This finding indicates a conduction delay situated primarily within which anatomical structure?",
+        options: [
+          { letter: "A", text: "Purkinje fiber network", isCorrect: false, rationale: "Conduction delays in the Purkinje system widen the QRS complex (>0.12 s), but do not primarily lengthen the PR interval." },
+          { letter: "B", text: "Bachmann bundle", isCorrect: false, rationale: "Delays in interatrial conduction broaden the P wave itself rather than producing isolated PR prolongation." },
+          { letter: "C", text: "Sinoatrial node", isCorrect: false, rationale: "The SA node initiates the P wave; the PR interval measures the delay between SA nodal emergence and ventricular activation." },
+          { letter: "D", text: "Atrioventricular node", isCorrect: true, rationale: "The normal PR interval is 0.12 to 0.20 seconds. A PR interval > 0.20 s defines first-degree AV block, which is caused by abnormal conduction slowing through the AV node." }
+        ]
+      },
+      {
+        id: 8,
+        topic: "Cardiac Mechanics",
+        question: "In an isolated perfused heart experiment, an investigator increases resting ventricular end-diastolic volume. The myocardium responds with an increase in contractile force. Which cellular mechanism is primarily responsible for this observation?",
+        options: [
+          { letter: "A", text: "Increased affinity of troponin C for calcium and optimized actin-myosin overlap", isCorrect: true, rationale: "The Frank-Starling law operates by physical stretch: stretching myocytes brings sarcomeres toward optimal filament overlap and enhances troponin C affinity for Ca2+, augmenting cross-bridge formation." },
+          { letter: "B", text: "Phosphorylation of phospholamban by protein kinase A", isCorrect: false, rationale: "Phospholamban phosphorylation is mediated by beta-1 adrenergic receptor stimulation, not mechanical stretch." },
+          { letter: "C", text: "Blockade of the electrogenic sodium-calcium exchanger (NCX)", isCorrect: false, rationale: "NCX inhibition is a mechanism of cardiac glycosides (e.g., digoxin), not the Frank-Starling phenomenon." },
+          { letter: "D", text: "Inhibition of sarcoplasmic reticulum calcium ATPase (SERCA)", isCorrect: false, rationale: "SERCA inhibition would impair diastolic relaxation (negative lusitropy) rather than mediate preload-dependent systolic force." }
+        ]
+      },
+      {
+        id: 9,
+        topic: "Vascular Dynamics",
+        question: "A 58-year-old male with severe peripheral arterial disease has a blood vessel whose internal radius is reduced by 50% due to an atherosclerotic plaque. Assuming blood flow remains laminar and perfusion pressure is unchanged, vascular resistance across this segment will increase by what factor?",
+        options: [
+          { letter: "A", text: "2-fold", isCorrect: false, rationale: "A 2-fold increase corresponds to an inverse linear relationship (1/r)." },
+          { letter: "B", text: "16-fold", isCorrect: true, rationale: "According to Poiseuille's law, resistance R is inversely proportional to radius to the fourth power (R proportional to 1/r^4). Halving the radius (0.5) results in 1/(0.5)^4 = 16-fold increase in resistance." },
+          { letter: "C", text: "8-fold", isCorrect: false, rationale: "An 8-fold increase corresponds to an inverse cubic relationship (1/r^3)." },
+          { letter: "D", text: "4-fold", isCorrect: false, rationale: "A 4-fold increase corresponds to an inverse square relationship (1/r^2)." }
+        ]
+      },
+      {
+        id: 10,
+        topic: "Microcirculation",
+        question: "In a cardiovascular physiology laboratory, a student analyzes an isolated capillary bed with the following parameters: Capillary hydrostatic pressure (Pc) = 32 mmHg; Interstitial fluid hydrostatic pressure (Pif) = -2 mmHg; Plasma oncotic pressure (pi_c) = 25 mmHg; Interstitial fluid oncotic pressure (pi_if) = 1 mmHg. Assuming reflection coefficient sigma = 1.0, what is the net filtration pressure?",
+        options: [
+          { letter: "A", text: "+6 mmHg", isCorrect: false, rationale: "+6 mmHg results from treating Pif as a positive value (32 - 2 - 24 = 6)." },
+          { letter: "B", text: "+4 mmHg", isCorrect: false, rationale: "+4 mmHg incorrectly omits interstitial oncotic pressure and miscalculates hydrostatic gradients." },
+          { letter: "C", text: "+10 mmHg", isCorrect: true, rationale: "Net Filtration Pressure NFP = (Pc - Pif) - sigma*(pi_c - pi_if) = [32 - (-2)] - [1.0 * (25 - 1)] = 34 - 24 = +10 mmHg (net filtration outward)." },
+          { letter: "D", text: "-2 mmHg", isCorrect: false, rationale: "-2 mmHg mistakenly reverses oncotic and hydrostatic vectors." }
+        ]
+      },
+      {
+        id: 11,
+        topic: "Hemodynamics",
+        question: "Which of the following circulatory divisions exhibits the lowest velocity of blood flow in the human cardiovascular system?",
+        options: [
+          { letter: "A", text: "Systemic arterioles", isCorrect: false, rationale: "Arterioles have higher velocity because their aggregate cross-sectional area is substantially smaller than capillaries." },
+          { letter: "B", text: "Muscular venules", isCorrect: false, rationale: "Venules coalesce into larger conduits with a smaller aggregate area, yielding higher velocities than capillaries." },
+          { letter: "C", text: "Venae cavae", isCorrect: false, rationale: "The venae cavae have a small aggregate cross-sectional area, yielding very high flow velocities second only to the aorta." },
+          { letter: "D", text: "Systemic capillaries", isCorrect: true, rationale: "Velocity v = Q / A. Although each individual capillary is microscopic, tens of billions in parallel possess the largest total cross-sectional area (~3000 cm^2), resulting in the lowest linear flow velocity (~0.3 mm/s), which optimizes nutrient exchange." }
+        ]
+      },
+      {
+        id: 12,
+        topic: "Autonomic Reflexes",
+        question: "A 22-year-old healthy male transitions rapidly from a supine to an upright standing posture. What is the immediate direct hemodynamic perturbation that initiates the baroreceptor reflex?",
+        options: [
+          { letter: "A", text: "Gravitational pooling of blood in lower extremity veins, decreasing cardiac preload", isCorrect: true, rationale: "Standing causes gravitational pooling of 500-1000 mL of blood in dependent compliant veins, which immediately lowers central venous pressure, venous return, EDV, SV, and MAP." },
+          { letter: "B", text: "Vasodilation of splanchnic resistance arterioles via parasympathetic discharge", isCorrect: false, rationale: "Arterioles do not passively dilate upon standing; the reflex response causes sympathetic arteriolar constriction." },
+          { letter: "C", text: "Direct suppression of SA node firing by thoracic mechanoreceptors", isCorrect: false, rationale: "The SA node is disinhibited (tachycardia) rather than suppressed upon standing." },
+          { letter: "D", text: "Sudden increase in intrathoracic blood volume and right atrial pressure", isCorrect: false, rationale: "Intrathoracic volume decreases markedly during upright standing." }
+        ]
+      },
+      {
+        id: 13,
+        topic: "Cardiac Electrophysiology",
+        question: "Which of the following electrical events corresponds to the period when ventricular myocytes are completely incapable of firing a propagated action potential, regardless of the stimulus intensity?",
+        options: [
+          { letter: "A", text: "Relative refractory period (RRP)", isCorrect: false, rationale: "During the RRP, some Na+ channels have recovered, meaning an action potential can be triggered by a suprathreshold stimulus." },
+          { letter: "B", text: "Absolute refractory period (ARP)", isCorrect: true, rationale: "During the ARP, voltage-gated fast Na+ channels are inactivated and cannot be reopened; the cell is electrically unexcitable." },
+          { letter: "C", text: "Supranormal period (SNP)", isCorrect: false, rationale: "In the SNP, the membrane potential is close to threshold and the cell is hyper-excitable." },
+          { letter: "D", text: "Vulnerable window of the T wave", isCorrect: false, rationale: "The vulnerable window falls within the relative refractory period where an impulse may provoke reentry or fibrillation, but the tissue is not absolutely unexcitable." }
+        ]
+      },
+      {
+        id: 14,
+        topic: "PV Loop Mechanics",
+        question: "During the ventricular pressure-volume loop, closure of the aortic valve marks the transition into which of the following mechanical phases?",
+        options: [
+          { letter: "A", text: "Isovolumetric contraction", isCorrect: false, rationale: "Isovolumetric contraction begins with mitral valve closure (S1) and ends with aortic valve opening." },
+          { letter: "B", text: "Rapid ventricular filling", isCorrect: false, rationale: "Rapid filling starts when intraventricular pressure drops below atrial pressure, causing the mitral valve to open." },
+          { letter: "C", text: "Isovolumetric relaxation", isCorrect: true, rationale: "Aortic valve closure terminates systolic ejection and initiates isovolumetric relaxation, during which both aortic and mitral valves are closed and ventricular pressure falls at a constant end-systolic volume." },
+          { letter: "D", text: "Reduced ventricular ejection", isCorrect: false, rationale: "Reduced ejection occurs before the aortic valve closes." }
+        ]
+      },
+      {
+        id: 15,
+        topic: "Adrenergic Signaling",
+        question: "An intravenous infusion of norepinephrine is administered to an experimental subject. Which of the following myocardial intracellular effects is directly mediated by norepinephrine binding to beta-1 adrenergic receptors?",
+        options: [
+          { letter: "A", text: "Activation of Gi leading to opening of inward rectifier K+ channels", isCorrect: false, rationale: "This is the signaling pathway of acetylcholine on muscarinic M2 receptors." },
+          { letter: "B", text: "Activation of Gq stimulating phospholipase C and inositol trisphosphate", isCorrect: false, rationale: "This is the signaling pathway for alpha-1 adrenergic receptors on vascular smooth muscle." },
+          { letter: "C", text: "Inhibition of adenylyl cyclase causing a marked fall in cyclic AMP", isCorrect: false, rationale: "Beta-1 activation stimulates, rather than inhibits, adenylyl cyclase." },
+          { letter: "D", text: "Activation of Gs stimulating adenylyl cyclase and protein kinase A", isCorrect: true, rationale: "Beta-1 adrenergic receptors couple to Gs, activating adenylyl cyclase to produce cAMP, which activates PKA to phosphorylate L-type Ca2+ channels, RyR, and phospholamban." }
+        ]
+      },
+      {
+        id: 16,
+        topic: "Valvular Pathophysiology",
+        question: "A 65-year-old female presents with progressive dyspnea on exertion. Cardiac exam reveals a harsh systolic crescendo-decrescendo murmur heard best at the right second intercostal space that radiates to the carotid arteries. What changes in left ventricular hemodynamics are expected?",
+        options: [
+          { letter: "A", text: "Markedly elevated peak systolic pressure and increased afterload", isCorrect: true, rationale: "Aortic stenosis narrows the valve orifice, creating large resistance to ejection. The LV must generate markedly elevated systolic pressures to overcome this increased afterload, which increases ESV and decreases stroke volume." },
+          { letter: "B", text: "Decreased end-systolic volume with increased stroke volume", isCorrect: false, rationale: "Increased afterload increases ESV and decreases stroke volume." },
+          { letter: "C", text: "Reduced peak intraventricular systolic pressure and low afterload", isCorrect: false, rationale: "Intraventricular systolic pressure rises sharply behind the stenotic valve." },
+          { letter: "D", text: "Unchanged end-systolic volume with an elevated stroke volume", isCorrect: false, rationale: "Stroke volume is impaired by high afterload, not elevated." }
+        ]
+      },
+      {
+        id: 17,
+        topic: "Guyton Curves",
+        question: "On the Guyton vascular function curve, what hemodynamic variable is represented by the point where the curve intersects the horizontal axis (zero cardiac output / flow)?",
+        options: [
+          { letter: "A", text: "Central venous pressure", isCorrect: false, rationale: "CVP is represented on the horizontal axis during active flow states, but the specific zero-flow intercept is Pmc." },
+          { letter: "B", text: "Mean arterial pressure", isCorrect: false, rationale: "MAP equals Pmc only when the heart has stopped, but the x-axis specifically plots right atrial pressure." },
+          { letter: "C", text: "Mean systemic filling pressure (Pmc)", isCorrect: true, rationale: "The x-intercept of the vascular function curve represents mean systemic filling pressure (Pmc, normally ~7 mmHg), which is the pressure throughout the vasculature when the heart stops and flow is zero." },
+          { letter: "D", text: "Total peripheral vascular resistance", isCorrect: false, rationale: "Resistance is reflected by the slope of the vascular function curve, not its x-intercept." }
+        ]
+      },
+      {
+        id: 18,
+        topic: "Vascular Control",
+        question: "Which of the following vascular beds demonstrates flow mediated by active vasodilation via beta-2 adrenergic receptors in response to circulating epinephrine?",
+        options: [
+          { letter: "A", text: "Renal cortical arterioles", isCorrect: false, rationale: "Renal arterioles possess predominantly alpha-1 receptors mediating vasoconstriction." },
+          { letter: "B", text: "Skeletal muscle arterioles", isCorrect: true, rationale: "Skeletal muscle resistance beds possess high concentrations of beta-2 adrenergic receptors that couple to Gs to cause vasodilation in response to physiological levels of circulating epinephrine." },
+          { letter: "C", text: "Cutaneous arterioles", isCorrect: false, rationale: "Cutaneous beds contain predominantly alpha-1 receptors mediating vasoconstriction." },
+          { letter: "D", text: "Cerebral arterioles", isCorrect: false, rationale: "Cerebral circulation is governed by autoregulation (PCO2, local metabolites) with minimal autonomic receptor influence." }
+        ]
+      },
+      {
+        id: 19,
+        topic: "Excitation-Contraction Coupling",
+        question: "During excitation-contraction coupling in ventricular myocytes, what trigger initiates calcium-induced calcium release (CICR) from the sarcoplasmic reticulum?",
+        options: [
+          { letter: "A", text: "Inward Na+ current through voltage-gated Nav1.5 channels", isCorrect: false, rationale: "Fast Na+ current initiates depolarization, but does not activate RyR channels directly." },
+          { letter: "B", text: "Outward current through delayed rectifier potassium channels", isCorrect: false, rationale: "Potassium efflux mediates repolarization." },
+          { letter: "C", text: "Inward Ca2+ current entering through L-type channels (ICa,L)", isCorrect: true, rationale: "During Phase 2, Ca2+ enters via voltage-gated L-type Ca2+ channels in the T-tubule. This local influx triggers the nearby ryanodine receptor (RyR2) on the sarcoplasmic reticulum to release large amounts of stored Ca2+ (CICR)." },
+          { letter: "D", text: "Direct mechanical tugging of the transverse tubule on the RyR receptor", isCorrect: false, rationale: "Direct mechanical coupling between DHPR and RyR occurs in skeletal muscle, not cardiac muscle." }
+        ]
+      },
+      {
+        id: 20,
+        topic: "Hemodynamic Principles",
+        question: "A 30-year-old male presents with palpitations. Electrocardiogram reveals a regular narrow-complex tachycardia at 180 beats/min. Cardiac output is found to be significantly reduced. What accounts for the reduced stroke volume at this heart rate?",
+        options: [
+          { letter: "A", text: "Impaired diastolic filling time", isCorrect: true, rationale: "At heart rates >160-180 bpm, diastolic interval is shortened far more than systole. The shortened filling time reduces end-diastolic volume, which depresses stroke volume and drops cardiac output." },
+          { letter: "B", text: "Progressive opening of the pericardial space", isCorrect: false, rationale: "The pericardium does not expand or open during acute tachycardia." },
+          { letter: "C", text: "Downregulation of cardiac troponin C", isCorrect: false, rationale: "Troponin C concentration and affinity do not downregulate during acute tachyarrhythmias." },
+          { letter: "D", text: "Complete cessation of atrial contraction", isCorrect: false, rationale: "Atrial depolarization continues, but reduced diastolic time limits ventricular filling." }
+        ]
+      },
+      {
+        id: 21,
+        topic: "Humoral Control",
+        question: "Administration of a pharmacological agent that selectively stimulates vascular smooth muscle V1 receptors will produce which of the following responses?",
+        options: [
+          { letter: "A", text: "Arteriolar vasoconstriction via Gq signaling", isCorrect: true, rationale: "Vasopressin V1 receptors are located on vascular smooth muscle and couple to Gq, activating phospholipase C to produce IP3 and DAG, raising intracellular Ca2+ and causing intense vasoconstriction." },
+          { letter: "B", text: "Insertion of Aquaporin-2 channels into renal collecting ducts", isCorrect: false, rationale: "Aquaporin-2 insertion is mediated by renal V2 receptors coupling to Gs." },
+          { letter: "C", text: "Widespread arteriolar vasodilation via cyclic AMP elevation", isCorrect: false, rationale: "V1 activation causes vasoconstriction, not vasodilation." },
+          { letter: "D", text: "Direct inotropic stimulation of ventricular myocytes", isCorrect: false, rationale: "V1 receptors do not provide significant direct inotropic stimulation on human ventricles." }
+        ]
+      },
+      {
+        id: 22,
+        topic: "PV Loop Interpretation",
+        question: "A 54-year-old male with chronic hypertension undergoes cardiac assessment. His PV loop demonstrates an increase in peak systolic intraventricular pressure with a reduced stroke volume and elevated end-systolic volume. This shift represents:",
+        options: [
+          { letter: "A", text: "Increased myocardial compliance", isCorrect: false, rationale: "Increased compliance shifts the diastolic curve downward/rightward without raising peak systolic pressure." },
+          { letter: "B", text: "Increased afterload", isCorrect: true, rationale: "Elevated afterload forces the ventricle to generate higher pressure before and during ejection. Increased resistance to myocyte shortening causes the aortic valve to close at a higher ESV, narrowing the loop and reducing stroke volume." },
+          { letter: "C", text: "Increased preload", isCorrect: false, rationale: "Increased preload shifts the right-hand border to the right and increases stroke volume." },
+          { letter: "D", text: "Increased inotropy", isCorrect: false, rationale: "Increased inotropy rotates the ESPVR line leftward, decreasing ESV and increasing stroke volume." }
+        ]
+      },
+      {
+        id: 23,
+        topic: "Clinical Hemodynamics",
+        question: "A patient in the intensive care unit has a balloon flotation catheter placed. Which parameter provides the most accurate clinical approximation of left ventricular end-diastolic volume in the absence of mitral stenosis?",
+        options: [
+          { letter: "A", text: "Mean systemic filling pressure", isCorrect: false, rationale: "Mean systemic filling pressure reflects vascular volume and compliance at zero flow." },
+          { letter: "B", text: "Systemic vascular resistance", isCorrect: false, rationale: "SVR measures systemic arteriolar resistance (afterload)." },
+          { letter: "C", text: "Pulmonary capillary wedge pressure", isCorrect: true, rationale: "In the absence of mitral valve disease, pulmonary capillary wedge pressure (PCWP) reflects left atrial pressure, which equals left ventricular end-diastolic pressure (LVEDP) and correlates with left ventricular end-diastolic volume (preload)." },
+          { letter: "D", text: "Right atrial pressure", isCorrect: false, rationale: "Right atrial pressure reflects right ventricular preload, not left ventricular preload." }
+        ]
+      },
+      {
+        id: 24,
+        topic: "Vascular Biophysics",
+        question: "Which of the following conditions is most likely to produce turbulent rather than laminar blood flow in a large blood vessel?",
+        options: [
+          { letter: "A", text: "Increased blood viscosity secondary to polycythemia vera", isCorrect: false, rationale: "High viscosity increases the denominator in the Reynolds equation, lowering Re and stabilizing laminar flow." },
+          { letter: "B", text: "A reduction in vessel diameter without a change in velocity", isCorrect: false, rationale: "Reducing vessel diameter lowers Re unless velocity increases disproportionately." },
+          { letter: "C", text: "A high linear velocity in a wide-diameter vessel with low blood viscosity", isCorrect: true, rationale: "Reynolds number Re = (rho * D * v) / eta. High linear velocity (v), large diameter (D), and low viscosity (eta, as in severe anemia) raise Re > 2000-3000, predisposing to turbulent flow." },
+          { letter: "D", text: "Uniform alignment of erythrocytes along the central axial stream", isCorrect: false, rationale: "Parabolic axial alignment is the defining characteristic of silent laminar flow." }
+        ]
+      },
+      {
+        id: 25,
+        topic: "Pharmacological Inotropy",
+        question: "A patient with severe heart failure is administered dobutamine, a synthetic catecholamine with predominant beta-1 adrenergic agonist activity. What effect will this drug have on the ventricular pressure-volume loop?",
+        options: [
+          { letter: "A", text: "A leftward, steeper shift of the End-Systolic Pressure-Volume Relationship (ESPVR)", isCorrect: true, rationale: "Positive inotropic agents increase myocardial contractility, rotating the ESPVR line leftward and steeper. The ventricle empties more completely, decreasing ESV and increasing stroke volume for any given preload." },
+          { letter: "B", text: "A rightward displacement of the end-diastolic volume point", isCorrect: false, rationale: "Rightward shift of EDV reflects increased preload, which is not the primary direct inotropic effect of dobutamine." },
+          { letter: "C", text: "Downward flattening of the end-systolic elastance slope", isCorrect: false, rationale: "Flattening of the ESPVR slope reflects reduced inotropy (heart failure)." },
+          { letter: "D", text: "A parallel downward shift of the end-diastolic filling curve", isCorrect: false, rationale: "Downward shift of the diastolic curve reflects increased ventricular compliance." }
+        ]
+      },
+      {
+        id: 26,
+        topic: "Coronary Circulation",
+        question: "During which phase of the cardiac cycle do the coronary arteries supplying the left ventricular subendocardium receive the largest fraction of their total blood flow?",
+        options: [
+          { letter: "A", text: "Rapid ventricular ejection", isCorrect: false, rationale: "Systolic myocardial compression minimizes left subendocardial flow during rapid ejection." },
+          { letter: "B", text: "Isovolumetric relaxation and early diastole", isCorrect: true, rationale: "During ventricular systole, intramyocardial tissue pressure exceeds intra-aortic pressure, compressing subendocardial capillaries and impeding flow. As the myocardium relaxes in diastole, extravascular compression resolves while aortic root pressure remains high, allowing maximal left coronary perfusion." },
+          { letter: "C", text: "Isovolumetric contraction", isCorrect: false, rationale: "High intraventricular wall tension during isovolumetric contraction creates maximal extravascular compression." },
+          { letter: "D", text: "Reduced ventricular ejection", isCorrect: false, rationale: "Subendocardial vessels remain compressed during reduced ejection." }
+        ]
+      },
+      {
+        id: 27,
+        topic: "Cellular Lusitropy",
+        question: "An experimental drug is found to selectively inhibit phospholamban (PLB) phosphorylation in cardiac myocytes. What will be the direct functional consequence on the heart?",
+        options: [
+          { letter: "A", text: "Accelerated removal of cytosolic calcium during diastole", isCorrect: false, rationale: "Cytosolic Ca2+ clearance would be slowed, not accelerated." },
+          { letter: "B", text: "Prolongation of ventricular relaxation (impaired lusitropy)", isCorrect: true, rationale: "Unphosphorylated phospholamban inhibits the SERCA pump. Normally, beta-1 adrenergic stimulation phosphorylates PLB to remove this inhibition, accelerating Ca2+ re-uptake and promoting rapid relaxation (positive lusitropy). Blocking PLB phosphorylation prevents SERCA disinhibition, prolonging relaxation." },
+          { letter: "C", text: "Marked increase in Phase 0 upstroke velocity", isCorrect: false, rationale: "Phase 0 upstroke velocity is mediated by voltage-gated sodium channels (INa)." },
+          { letter: "D", text: "Enhanced calcium storage within the sarcoplasmic reticulum", isCorrect: false, rationale: "SERCA inhibition reduces the rate of SR Ca2+ re-uptake and storage." }
+        ]
+      },
+      {
+        id: 28,
+        topic: "Guyton Equilibrium",
+        question: "Which of the following maneuvers or conditions causes an isolated upward and counterclockwise rotation of the cardiac function curve on a Guyton diagram?",
+        options: [
+          { letter: "A", text: "Deep systemic hypovolemia from thermal burn injury", isCorrect: false, rationale: "Hypovolemia shifts the vascular function curve downward and leftward without altering intrinsic cardiac contractility." },
+          { letter: "B", text: "Infusion of a competitive beta-1 adrenergic antagonist", isCorrect: false, rationale: "Beta-blockers reduce inotropy, rotating the cardiac function curve downward and clockwise." },
+          { letter: "C", text: "Direct electrical stimulation of cardiac sympathetic nerves", isCorrect: true, rationale: "Sympathetic stimulation exerts positive inotropic and chronotropic effects, allowing the heart to pump higher cardiac output at any given right atrial pressure. This rotates the cardiac function curve upward and counterclockwise." },
+          { letter: "D", text: "Severe constriction of systemic resistance arterioles", isCorrect: false, rationale: "Arteriolar constriction increases afterload, which depresses cardiac output and rotates the vascular function curve clockwise." }
+        ]
+      },
+      {
+        id: 29,
+        topic: "Pacemaker Hierarchy",
+        question: "A 72-year-old female presents with severe dizziness. An ECG reveals complete (third-degree) atrioventricular block with a ventricular rate of 32 beats/min. The escape rhythm driving ventricular depolarizations most likely originates from which region of the conducting system?",
+        options: [
+          { letter: "A", text: "Purkinje fibers", isCorrect: true, rationale: "Intrinsic pacemaker discharge rates are: SA node (60-100 bpm), AV node (40-60 bpm), and Purkinje fibers (15-40 bpm). An escape rate of 32 bpm with AV dissociation originates from the Purkinje system or bundle branches." },
+          { letter: "B", text: "Atrioventricular node", isCorrect: false, rationale: "An AV nodal (junctional) escape rhythm typically discharges at 40-60 bpm." },
+          { letter: "C", text: "Internodal tracts", isCorrect: false, rationale: "Internodal tracts are atrial pathways; their activation would produce an atrial rhythm blocked at the AV junction." },
+          { letter: "D", text: "Sinoatrial node", isCorrect: false, rationale: "SA nodal rate is 60-100 bpm; in third-degree AV block, SA impulses fail to reach the ventricles." }
+        ]
+      },
+      {
+        id: 30,
+        topic: "Starling Capillary Forces",
+        question: "In the microcirculation of skeletal muscle, what will be the effect of increasing interstitial colloid oncotic pressure (pi_if) from 1 mmHg to 8 mmHg due to capillary protein leakage?",
+        options: [
+          { letter: "A", text: "Decreased net fluid movement out of the capillary", isCorrect: false, rationale: "Increased pi_if enhances filtration rather than decreasing it." },
+          { letter: "B", text: "Increased transcapillary fluid filtration into the interstitium", isCorrect: true, rationale: "Interstitial oncotic pressure (pi_if) exerts an osmotic pull drawing fluid out of the capillary. Increasing pi_if raises net filtration pressure (NFP = [Pc - Pif] - sigma*[pi_c - pi_if]), driving fluid into the interstitium and promoting edema." },
+          { letter: "C", text: "Immediate elevation of plasma oncotic pressure (pi_c)", isCorrect: false, rationale: "Capillary leakage of protein lowers or maintains plasma oncotic pressure rather than raising it." },
+          { letter: "D", text: "Direct closure of precapillary resistance sphincters", isCorrect: false, rationale: "Precapillary sphincters respond to local metabolites and myogenic tone, not interstitial oncotic force." }
+        ]
+      },
+      {
+        id: 31,
+        topic: "Autonomic Reflexes",
+        question: "Carotid massage is performed on a patient experiencing supraventricular tachycardia. What is the reflex mechanism responsible for slowing conduction through the AV node?",
+        options: [
+          { letter: "A", text: "Direct stimulation of alpha-1 receptors on nodal vascular smooth muscle", isCorrect: false, rationale: "Alpha-1 receptors mediate vascular smooth muscle contraction, not AV nodal conduction delay." },
+          { letter: "B", text: "Activation of carotid sinus baroreceptors, increasing vagal efferent discharge", isCorrect: true, rationale: "Mechanical compression of the carotid sinus mimics high arterial pressure, increasing afferent firing along the glossopharyngeal nerve (CN IX) to the medullary NTS. This excites the cardioinhibitory center, increasing parasympathetic (vagal) efferent output to the AV node to slow conduction." },
+          { letter: "C", text: "Activation of peripheral chemoreceptors responsive to hypercapnia", isCorrect: false, rationale: "Chemoreceptors respond to hypoxia, hypercapnia, and acidosis, not mechanical pressure deformation." },
+          { letter: "D", text: "Sudden withdrawal of parasympathetic outflow to the SA node", isCorrect: false, rationale: "Carotid massage increases vagal tone; it does not withdraw it." }
+        ]
+      },
+      {
+        id: 32,
+        topic: "Vascular Autoregulation",
+        question: "In a vascular bed with robust autoregulation (such as the brain or kidneys), what happens to local arteriolar resistance when perfusion pressure increases from 80 mmHg to 120 mmHg?",
+        options: [
+          { letter: "A", text: "Resistance remains unchanged while flow increases by 50%", isCorrect: false, rationale: "Flow remains constant in the autoregulatory range; it does not increase linearly with pressure." },
+          { letter: "B", text: "Resistance decreases via passive stretch-induced dilation", isCorrect: false, rationale: "Arterioles constrict when stretched (Bayliss myogenic response), raising resistance." },
+          { letter: "C", text: "Resistance increases to maintain relatively constant blood flow", isCorrect: true, rationale: "Autoregulation maintains constant tissue blood flow despite fluctuations in perfusion pressure (Q = DeltaP / R). When perfusion pressure rises, resistance arterioles constrict (myogenic response and wash-out of vasodilators), increasing resistance (R) proportionately to keep flow (Q) steady." },
+          { letter: "D", text: "Resistance falls to zero as turbulent cascades develop", isCorrect: false, rationale: "Resistance increases; it never drops to zero." }
+        ]
+      },
+      {
+        id: 33,
+        topic: "Neurohormonal Systems",
+        question: "A 60-year-old male with chronic systolic heart failure presents with peripheral edema and fatigue. His ejection fraction is 28%. Which of the following neurohormonal mechanisms is chronically elevated and contributes to progressive adverse ventricular remodeling?",
+        options: [
+          { letter: "A", text: "Atrial natriuretic peptide causing marked systemic hypotension", isCorrect: false, rationale: "While ANP is released, its beneficial vasodilatory and natriuretic actions are overwhelmed by the sympathetic and RAAS cascades in advanced heart failure." },
+          { letter: "B", text: "Parasympathetic vagal outflow to the ventricular myocardium", isCorrect: false, rationale: "Vagal tone is characteristically depressed in heart failure, and parasympathetic fibers minimally innervate the ventricles." },
+          { letter: "C", text: "Angiotensin II and aldosterone stimulating myocardial fibrosis", isCorrect: true, rationale: "Reduced cardiac output leads to sustained renal hypoperfusion and high sympathetic drive, causing chronic activation of the RAAS. Angiotensin II and aldosterone act on cardiac fibroblasts and myocytes to induce hypertrophy, collagen deposition, and interstitial fibrosis." },
+          { letter: "D", text: "Nitric oxide synthase hyperactivation in large conduit arteries", isCorrect: false, rationale: "Endothelial dysfunction with impaired nitric oxide bioavailability is characteristic of heart failure." }
+        ]
+      },
+      {
+        id: 34,
+        topic: "Cardiac Conduction Velocity",
+        question: "An electrophysiological study evaluates action potential propagation through the ventricular conduction system. Which structure possesses the fastest electrical conduction velocity?",
+        options: [
+          { letter: "A", text: "Atrioventricular node", isCorrect: false, rationale: "The AV node is the slowest conducting tissue (~0.05 m/s), providing the delay required for ventricular filling." },
+          { letter: "B", text: "Sinoatrial node", isCorrect: false, rationale: "The SA node conducts slowly (~0.05 m/s) and acts as a pacemaker, not a high-speed conduit." },
+          { letter: "C", text: "Ventricular contractile myocytes", isCorrect: false, rationale: "Ventricular myocytes conduct at approximately 0.5-1.0 m/s, considerably slower than Purkinje fibers." },
+          { letter: "D", text: "Purkinje fibers", isCorrect: true, rationale: "Purkinje fibers have a conduction velocity of 2-4 m/s, the fastest in the heart. This rapid transmission is enabled by their large fiber diameter and abundant gap junctions (connexin-40/43), ensuring near-synchronous activation of the ventricles." }
+        ]
+      },
+      {
+        id: 35,
+        topic: "Ventricular Wall Stress",
+        question: "A patient with long-standing hypertension has a mean arterial pressure of 130 mmHg and an end-diastolic volume of 120 mL. Over time, the left ventricle adapts by developing concentric hypertrophy. What is the primary physical law governing this compensatory reduction in wall stress?",
+        options: [
+          { letter: "A", text: "Law of Laplace: sigma = (P * r) / (2 * h)", isCorrect: true, rationale: "The Law of Laplace states that wall stress sigma = (P * r) / (2h), where P is transmural pressure, r is cavity radius, and h is wall thickness. In chronic hypertension (high P), increasing wall thickness (h) via concentric hypertrophy normalizes wall stress toward baseline." },
+          { letter: "B", text: "Poiseuille’s Law: Q = (DeltaP * pi * r^4) / (8 * eta * l)", isCorrect: false, rationale: "Poiseuille's law governs laminar fluid resistance and volume flow through cylindrical tubes." },
+          { letter: "C", text: "Starling's Law: Force proportional to initial sarcomere length", isCorrect: false, rationale: "Starling's law relates resting sarcomere length to contractile tension." },
+          { letter: "D", text: "Fick Principle: CO = VO2 / (Ca - Cv)", isCorrect: false, rationale: "The Fick principle calculates cardiac output from oxygen consumption and arteriovenous oxygen content difference." }
+        ]
+      },
+      {
+        id: 36,
+        topic: "Central Autonomic Circuitry",
+        question: "During an experimental drug infusion, an animal’s mean arterial blood pressure rises sharply. In response, afferent nerve activity recorded from the carotid sinus nerve increases. Where do these afferent sensory axons first synapse within the brainstem?",
+        options: [
+          { letter: "A", text: "Nucleus ambiguus", isCorrect: false, rationale: "The nucleus ambiguus contains preganglionic parasympathetic motor neurons that receive excitatory interneuronal input from the NTS." },
+          { letter: "B", text: "Nucleus tractus solitarius (NTS)", isCorrect: true, rationale: "Primary afferent baroreceptor fibers from the carotid sinus (CN IX) and aortic arch (CN X) enter the dorsal brainstem and terminate in the nucleus tractus solitarius (NTS), the principal sensory integration center for cardiovascular autonomic reflexes." },
+          { letter: "C", text: "Rostral ventrolateral medulla", isCorrect: false, rationale: "The rostral ventrolateral medulla contains sympathetic premotor neurons that receive inhibitory interneuronal input from the caudal ventrolateral medulla (driven by the NTS)." },
+          { letter: "D", text: "Dorsal horn of the thoracic spinal cord", isCorrect: false, rationale: "Preganglionic sympathetic efferents reside in the intermediolateral cell column of the thoracic cord, receiving descending bulbospinal projections." }
+        ]
+      },
+      {
+        id: 37,
+        topic: "Arrhythmogenesis",
+        question: "A 48-year-old male presents with acute myocardial infarction. The ischemic myocardium develops an intracellular buildup of calcium and sodium ions, combined with extracellular potassium accumulation. This metabolic derangement causes delayed afterdepolarizations (DADs) primarily through which mechanism?",
+        options: [
+          { letter: "A", text: "Excessive outward current through ATP-sensitive potassium channels", isCorrect: false, rationale: "Outward K+ flux produces hyperpolarization, which protects against afterdepolarizations." },
+          { letter: "B", text: "Suppression of the T-type calcium current during late diastole", isCorrect: false, rationale: "Suppressing T-type calcium current reduces excitability rather than generating depolarizations." },
+          { letter: "C", text: "Activation of the electrogenic 3 Na+ : 1 Ca2+ exchanger (NCX)", isCorrect: true, rationale: "Intracellular Ca2+ overload provokes spontaneous Ca2+ release from the sarcoplasmic reticulum during Phase 4. This excess cytosolic Ca2+ is extruded by the forward mode of the Na+/Ca2+ exchanger, which brings 3 Na+ in for every 1 Ca2+ extruded. This net inward positive current generates a transient depolarizing inward current (Iti) producing a DAD." },
+          { letter: "D", text: "Enhanced sequestration of calcium by phospholamban-activated SERCA", isCorrect: false, rationale: "Enhanced SERCA activity would reduce cytosolic Ca2+ overload, preventing DADs." }
+        ]
+      },
+      {
+        id: 38,
+        topic: "Venous Waveforms",
+        question: "In the normal cardiac cycle, what mechanical event corresponds to the peak of the 'v' wave observed on a left atrial pressure tracing?",
+        options: [
+          { letter: "A", text: "Active atrial contraction", isCorrect: false, rationale: "Active atrial systole produces the 'a' wave." },
+          { letter: "B", text: "Bulging of the mitral valve into the atrium during isovolumetric contraction", isCorrect: false, rationale: "Bulging of the AV valve leaflets during early isovolumetric contraction produces the 'c' wave." },
+          { letter: "C", text: "Atrial filling against a closed mitral valve just prior to valve opening", isCorrect: true, rationale: "The venous 'v' wave of atrial pressure reflects passive venous filling of the atrium during late ventricular systole, while the AV valve remains closed. The peak of the v wave occurs just before the mitral valve opens." },
+          { letter: "D", text: "Rapid drainage of blood from the atrium into the relaxing ventricle", isCorrect: false, rationale: "Rapid passive ventricular emptying from the atrium produces the downward 'y' descent." }
+        ]
+      },
+      {
+        id: 39,
+        topic: "Edema Pathophysiology",
+        question: "An otherwise healthy 28-year-old female experiences mild swelling of both lower extremities after standing for 8 hours as an operating room nurse. What is the primary Starling force alteration responsible for this dependent edema?",
+        options: [
+          { letter: "A", text: "Decreased plasma colloid oncotic pressure (pi_c)", isCorrect: false, rationale: "Plasma oncotic pressure remains normal because systemic plasma protein synthesis is unchanged." },
+          { letter: "B", text: "Markedly increased interstitial hydrostatic pressure (Pif)", isCorrect: false, rationale: "Interstitial hydrostatic pressure rises slightly as fluid accumulates, which opposes (rather than causes) further filtration." },
+          { letter: "C", text: "Increased capillary hydrostatic pressure (Pc) in dependent veins", isCorrect: true, rationale: "Prolonged standing produces gravitational hydrostatic pooling in the veins of the feet and legs, raising venous pressure and capillary hydrostatic pressure (Pc). Elevated Pc increases net outward filtration, exceeding lymphatic return and causing dependent edema." },
+          { letter: "D", text: "Impaired lymphatic valve permeability due to endothelial nitric oxide", isCorrect: false, rationale: "Prolonged standing does not impair lymphatic endothelial permeability." }
+        ]
+      },
+      {
+        id: 40,
+        topic: "Guyton Systemic Mechanics",
+        question: "In a laboratory model of the systemic circulation, total peripheral vascular resistance (SVR) is doubled while cardiac inotropy and blood volume remain unchanged. How will this alter the vascular function curve on a Guyton diagram?",
+        options: [
+          { letter: "A", text: "The curve will shift upward in a parallel fashion with an increased x-intercept", isCorrect: false, rationale: "Parallel upward shifts are produced by volume expansion or venoconstriction." },
+          { letter: "B", text: "The curve will shift downward in a parallel fashion with a decreased x-intercept", isCorrect: false, rationale: "Parallel downward shifts are produced by hemorrhage or venodilation." },
+          { letter: "C", text: "The curve will rotate counter-clockwise to become steeper around the unchanged Pmc", isCorrect: false, rationale: "Steeper counter-clockwise rotation occurs with decreased SVR (e.g., exercise or arteriolar vasodilation)." },
+          { letter: "D", text: "The curve will rotate clockwise to become flatter around the unchanged Pmc", isCorrect: true, rationale: "Total blood volume and vascular compliance determine the mean systemic filling pressure (Pmc, the x-intercept), which remains unchanged when blood volume is constant. Doubling arteriolar resistance impedes venous return at any given right atrial pressure, rotating the vascular function curve clockwise to a flatter slope around Pmc." }
+        ]
+      },
+      {
+        id: 41,
+        topic: "Vascular Smooth Muscle",
+        question: "A 50-year-old male with refractory hypertension is started on an oral medication that selectively blocks calcium entry through L-type channels on vascular smooth muscle. What is the immediate cellular consequence in resistance vessels?",
+        options: [
+          { letter: "A", text: "Decreased intracellular calcium, reduced myosin light-chain kinase activity, and vasodilation", isCorrect: true, rationale: "Vascular smooth muscle contraction requires calcium entry via L-type Ca2+ channels. Calcium binds calmodulin to activate myosin light-chain kinase (MLCK), which phosphorylates myosin to produce cross-bridge cycling. Calcium channel blockers reduce intracellular Ca2+, suppressing MLCK activity and promoting arteriolar vasodilation." },
+          { letter: "B", text: "Phosphorylation of myosin light chains via enhanced calmodulin binding", isCorrect: false, rationale: "Calcium channel blockers reduce calmodulin activation and decrease myosin phosphorylation." },
+          { letter: "C", text: "Activation of the Rho-kinase pathway leading to smooth muscle contraction", isCorrect: false, rationale: "Rho-kinase inhibits myosin phosphatase to enhance contraction; it is not stimulated by calcium antagonists." },
+          { letter: "D", text: "Direct stimulation of sarcoplasmic reticulum calcium release via ryanodine receptors", isCorrect: false, rationale: "Calcium channel blockers reduce cytosolic Ca2+ rather than stimulating SR release." }
+        ]
+      },
+      {
+        id: 42,
+        topic: "Autonomic Tone",
+        question: "An 18-year-old competitive runner has a resting heart rate of 45 beats/min and an arterial blood pressure of 116/72 mmHg. Which of the following autonomic mechanisms explains this resting bradycardia?",
+        options: [
+          { letter: "A", text: "Chronic upregulation of cardiac alpha-1 adrenergic receptors", isCorrect: false, rationale: "Resting heart rate is governed by beta-1 and M2 receptors, not myocardial alpha-1 receptors." },
+          { letter: "B", text: "High resting parasympathetic (cholinergic) vagal tone acting on M2 receptors", isCorrect: true, rationale: "Athletic conditioning increases resting cardiac stroke volume, allowing normal cardiac output to be maintained at lower heart rates via baroreflex-mediated enhancement of vagal tone. Acetylcholine binds muscarinic M2 receptors on SA nodal cells, activating IK,ACh and decreasing cAMP to slow Phase 4 depolarization." },
+          { letter: "C", text: "Complete blockade of slow delayed rectifier potassium channels", isCorrect: false, rationale: "Blocking K+ channels prolongs action potential duration and repolarization, and does not produce physiological training bradycardia." },
+          { letter: "D", text: "Selective suppression of adrenal medullary epinephrine release", isCorrect: false, rationale: "While resting sympathetic tone is low, resting heart rate is primarily modulated by tonic vagal nerve input." }
+        ]
+      },
+      {
+        id: 43,
+        topic: "Fick Principle",
+        question: "During a catheterization procedure, blood samples are drawn to calculate cardiac output using the Fick Principle. The following data are obtained: Total body oxygen consumption (VO2) = 250 mL O2/min; Arterial oxygen content (Ca) = 0.20 mL O2/mL blood; Mixed venous oxygen content (Cv) = 0.15 mL O2/mL blood. What is the patient's cardiac output?",
+        options: [
+          { letter: "A", text: "3.5 L/min", isCorrect: false, rationale: "3.5 L/min miscalculates the arteriovenous difference as 0.071 mL/mL." },
+          { letter: "B", text: "4.0 L/min", isCorrect: false, rationale: "4.0 L/min assumes an arteriovenous oxygen difference of 0.0625 mL/mL." },
+          { letter: "C", text: "5.0 L/min", isCorrect: true, rationale: "According to the Fick Principle: CO = VO2 / (Ca - Cv). Here, Ca - Cv = 0.20 - 0.15 = 0.05 mL O2/mL blood. Therefore, CO = 250 / 0.05 = 5000 mL/min = 5.0 L/min." },
+          { letter: "D", text: "6.2 L/min", isCorrect: false, rationale: "6.2 L/min results from dividing by 0.04 mL/mL." }
+        ]
+      },
+      {
+        id: 44,
+        topic: "Electrolyte Disturbances",
+        question: "A 73-year-old male with chronic renal failure has a baseline electrocardiogram that shows widened QRS complexes and tall, peaked T waves. The physician recognizes these findings as early manifestations of hyperkalemia. If serum potassium continues to rise, which ECG abnormality is expected to occur next?",
+        options: [
+          { letter: "A", text: "Prolongation of the QT interval due to a widened ST plateau", isCorrect: false, rationale: "Hyperkalemia accelerates Phase 3 repolarization and typically shortens the QT interval; QT prolongation is characteristic of hypokalemia or hypocalcemia." },
+          { letter: "B", text: "Development of prominent U waves following every T wave", isCorrect: false, rationale: "Prominent U waves are the hallmark of hypokalemia, not hyperkalemia." },
+          { letter: "C", text: "Progressive flattening and eventual loss of P waves", isCorrect: true, rationale: "The classic progression of hyperkalemia on ECG is: (1) Tall, tented/peaked T waves, (2) PR interval prolongation and flattening/loss of P waves, (3) QRS widening, and (4) Confluence of QRS and T waves into a sine-wave appearance, leading to ventricular fibrillation or asystole." },
+          { letter: "D", text: "Narrowing of the QRS complex into an accelerated junctional rhythm", isCorrect: false, rationale: "Increasing hyperkalemia widens the QRS complex due to progressive sodium channel inactivation." }
+        ]
+      },
+      {
+        id: 45,
+        topic: "Heart Sounds",
+        question: "What physiological mechanism causes the physiological splitting of the second heart sound (S2) during quiet inspiration?",
+        options: [
+          { letter: "A", text: "Increased venous return to the right heart delaying pulmonic valve closure (P2)", isCorrect: true, rationale: "Inspiration lowers intrathoracic pressure, increasing the pressure gradient for venous return into the right atrium and ventricle. The resulting increase in RV end-diastolic volume prolongs RV stroke volume and ejection time, delaying pulmonic valve closure (P2) so that it audibly follows aortic closure (A2)." },
+          { letter: "B", text: "Accelerated left ventricular ejection causing premature aortic valve closure (A2)", isCorrect: false, rationale: "Increased pulmonary vascular pooling during inspiration slightly decreases left ventricular filling, slightly advancing A2, but the primary driver of splitting is delayed P2." },
+          { letter: "C", text: "Delayed mitral valve closure relative to tricuspid valve closure", isCorrect: false, rationale: "S2 represents semilunar (aortic and pulmonic) valve closure, not AV valve closure (S1)." },
+          { letter: "D", text: "Complete temporary cessation of right ventricular filling during diaphragmatic descent", isCorrect: false, rationale: "Right ventricular filling is augmented during inspiration, not ceased." }
+        ]
+      },
+      {
+        id: 46,
+        topic: "Exercise Hemodynamics",
+        question: "During an exercise stress test, a healthy 25-year-old athlete demonstrates a three-fold increase in cardiac output. Which of the following changes in the peripheral vasculature prevents severe arterial hypertension from developing?",
+        options: [
+          { letter: "A", text: "Intense reflex venoconstriction across splanchnic storage beds", isCorrect: false, rationale: "Splanchnic venoconstriction augments preload, but does not prevent blood pressure from escalating." },
+          { letter: "B", text: "Widespread metabolic vasodilation in active skeletal muscle beds reducing total peripheral resistance", isCorrect: true, rationale: "In exercising skeletal muscle, local accumulation of vasoactive metabolites (adenosine, K+, H+, lactate) overrides sympathetic alpha-1 constriction (functional sympatholysis) and causes active hyperemia. The total cross-sectional area of active muscle beds dilates, markedly reducing systemic vascular resistance (SVR) and blunting the increase in mean arterial pressure (DeltaMAP = CO * SVR)." },
+          { letter: "C", text: "Release of antidiuretic hormone acting on vascular V1 receptors", isCorrect: false, rationale: "Vasopressin is a potent vasoconstrictor and would raise SVR." },
+          { letter: "D", text: "Downregulation of cardiac beta-1 adrenergic receptors", isCorrect: false, rationale: "Beta-1 receptors are actively engaged by high sympathetic tone to support heart rate and inotropy during exercise." }
+        ]
+      },
+      {
+        id: 47,
+        topic: "Pacemaker Hierarchy",
+        question: "A 68-year-old male is evaluated for lightheadedness. A diagnosis of sick sinus syndrome with sinoatrial nodal exit block is made. If the sinoatrial node fails completely, which latent pacemaker will take over pacemaking at an intrinsic rate of 40-60 beats/min?",
+        options: [
+          { letter: "A", text: "Terminal Purkinje arborizations", isCorrect: false, rationale: "Purkinje fibers fire at an intrinsic rate of 15-40 bpm." },
+          { letter: "B", text: "Left bundle branch anterior fascicle", isCorrect: false, rationale: "Bundle branches are part of the ventricular conduction system with slower escape rates (20-40 bpm)." },
+          { letter: "C", text: "Atrioventricular junctional tissue", isCorrect: true, rationale: "The intrinsic hierarchy of autorhythmic pacemakers is: SA node (60-100 bpm), AV node/junctional tissue (40-60 bpm), and Purkinje system (15-40 bpm). In the absence of SA nodal overdrive suppression, the AV node assumes the primary pacemaking role." },
+          { letter: "D", text: "Contractile left ventricular myocytes", isCorrect: false, rationale: "Normal contractile myocytes do not possess spontaneous pacemaker activity under healthy conditions." }
+        ]
+      },
+      {
+        id: 48,
+        topic: "Excitation-Contraction Coupling",
+        question: "In a cardiac myocyte, relaxation (diastole) requires rapid clearance of calcium from the cytoplasm. Which mechanism removes the majority (approximately 70–80%) of calcium from the cytosol back into storage?",
+        options: [
+          { letter: "A", text: "Extrusion via the sarcolemmal 3 Na+ : 1 Ca2+ exchanger (NCX)", isCorrect: false, rationale: "The sarcolemmal NCX extrudes roughly 15-28% of activator Ca2+ into the extracellular fluid." },
+          { letter: "B", text: "Efflux via the sarcolemmal plasma membrane calcium ATPase (PMCA)", isCorrect: false, rationale: "PMCA removes only ~1% of cytosolic calcium." },
+          { letter: "C", text: "Re-uptake into the sarcoplasmic reticulum by the SERCA2a pump", isCorrect: true, rationale: "In human cardiac myocytes, approximately 70-80% of cytoplasmic Ca2+ clearance during relaxation is mediated by the sarcoplasmic reticulum Ca2+-ATPase (SERCA2a) pump, which sequesters Ca2+ back into the SR lumen." },
+          { letter: "D", text: "Mitochondrial uptake through the calcium uniporter", isCorrect: false, rationale: "Mitochondrial uptake accounts for less than 1% of total calcium clearance under physiological conditions." }
+        ]
+      },
+      {
+        id: 49,
+        topic: "Electrolyte Disturbances",
+        question: "A 35-year-old female presents with severe diarrhea, muscle weakness, and fatigue. Serum potassium is 2.4 mEq/L. Which of the following electrocardiographic abnormalities is classic for this electrolyte disturbance?",
+        options: [
+          { letter: "A", text: "Widened QRS complex with peaked T waves", isCorrect: false, rationale: "Peaked T waves and widened QRS complexes indicate hyperkalemia." },
+          { letter: "B", text: "Shortened QT interval with tall P waves", isCorrect: false, rationale: "Shortened QT interval is typical of hypercalcemia." },
+          { letter: "C", text: "ST-segment depression, flattened T waves, and prominent U waves", isCorrect: true, rationale: "Hypokalemia (<3.5 mEq/L) hyperpolarizes the resting membrane and delays Phase 3 repolarization. On surface ECG, this produces ST-segment depression, flattening or inversion of T waves, and prominent U waves (a positive deflection following the T wave)." },
+          { letter: "D", text: "Constant PR prolongation without alterations in repolarization", isCorrect: false, rationale: "While conduction delays can occur, repolarization abnormalities (U waves, T flattening) are the defining hallmarks of hypokalemia." }
+        ]
+      },
+      {
+        id: 50,
+        topic: "Valvular PV Loops",
+        question: "A 65-year-old female is diagnosed with severe mitral regurgitation. Which of the following ventricular pressure-volume alterations characterizes chronic compensated mitral regurgitation compared to normal?",
+        options: [
+          { letter: "A", text: "Decreased end-diastolic volume with elevated peak systolic pressure", isCorrect: false, rationale: "EDV is increased due to chronic volume overload, and peak pressure is typically normal or reduced." },
+          { letter: "B", text: "Increased end-diastolic volume with elimination of isovolumetric contraction", isCorrect: true, rationale: "In mitral regurgitation, blood leaks retrograde from the left ventricle into the low-pressure left atrium throughout systole. Because blood begins escaping into the atrium as soon as the ventricle starts contracting (even before the aortic valve opens), true isovolumetric contraction is absent. Retrograde regurgitant volume returns to the ventricle during diastole, causing eccentric hypertrophy and elevated EDV." },
+          { letter: "C", text: "Markedly elevated end-systolic volume with an unchanged end-diastolic volume", isCorrect: false, rationale: "Mitral regurgitation is a volume-overload state characterized by elevated EDV; forward emptying into the low-pressure atrium allows low or normal ESV in compensated states." },
+          { letter: "D", text: "Preservation of distinct isovolumetric contraction and relaxation phases", isCorrect: false, rationale: "Mitral regurgitation lacks true isovolumetric phases because the incompetent mitral valve permits flow during periods that are normally closed-valve phases." }
+        ]
+      }
+    ];
+
+    // State
+    const userAnswers = {};
+    let currentFilter = 'all';
+
+    // Elements
+    const mcqContainer = document.getElementById('mcqContainer');
+    const quickNavContainer = document.getElementById('quickNavContainer');
+    const headerScore = document.getElementById('headerScore');
+    const quizProgressBar = document.getElementById('quizProgressBar');
+    const answeredCounterBadge = document.getElementById('answeredCounterBadge');
+    const missedCountSpan = document.getElementById('missedCount');
+    const unansweredCountSpan = document.getElementById('unansweredCount');
+    const resultsSection = document.getElementById('resultsSection');
+    const resetAllBtn = document.getElementById('resetAllBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const downloadHtmlBtn = document.getElementById('downloadHtmlBtn');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    // Section Tabs
+    const tabBtnMatching = document.getElementById('tabBtnMatching');
+    const tabBtnWritten = document.getElementById('tabBtnWritten');
+    const tabBtnMCQ = document.getElementById('tabBtnMCQ');
+    const sectionMatching = document.getElementById('sectionMatching');
+    const sectionWritten = document.getElementById('sectionWritten');
+    const sectionMCQ = document.getElementById('sectionMCQ');
+
+    function switchTab(target) {
+      [tabBtnMatching, tabBtnWritten, tabBtnMCQ].forEach(btn => {
+        btn.classList.remove('tab-active', 'border-rose-500', 'text-rose-400');
+        btn.classList.add('border-transparent', 'text-slate-400');
+      });
+      [sectionMatching, sectionWritten, sectionMCQ].forEach(sec => sec.classList.add('hidden'));
+
+      if (target === 'matching') {
+        tabBtnMatching.classList.add('tab-active', 'border-rose-500', 'text-rose-400');
+        tabBtnMatching.classList.remove('border-transparent', 'text-slate-400');
+        sectionMatching.classList.remove('hidden');
+      } else if (target === 'written') {
+        tabBtnWritten.classList.add('tab-active', 'border-rose-500', 'text-rose-400');
+        tabBtnWritten.classList.remove('border-transparent', 'text-slate-400');
+        sectionWritten.classList.remove('hidden');
+      } else {
+        tabBtnMCQ.classList.add('tab-active', 'border-rose-500', 'text-rose-400');
+        tabBtnMCQ.classList.remove('border-transparent', 'text-slate-400');
+        sectionMCQ.classList.remove('hidden');
+      }
+    }
+
+    tabBtnMatching.addEventListener('click', () => switchTab('matching'));
+    tabBtnWritten.addEventListener('click', () => switchTab('written'));
+    tabBtnMCQ.addEventListener('click', () => switchTab('mcq'));
+
+    // Matching logic
+    const matchingSolution = {
+      'match-1': 'B',
+      'match-2': 'A',
+      'match-3': 'D',
+      'match-4': 'E',
+      'match-5': 'C'
+    };
+
+    const matchingRationales = {
+      '1': 'Ventricular Phase 0 upstroke is driven by rapid activation of fast voltage-gated Na+ channels (INa).',
+      '2': 'Ventricular Phase 2 plateau reflects a balance between inward Ca2+ flux via L-type channels and outward delayed rectifier K+ currents.',
+      '3': 'Pacemaker Phase 4 diastolic depolarization is mediated by hyperpolarization-activated funny currents (If) followed by T/L-type Ca2+ entry.',
+      '4': 'Ventricular Phase 3 rapid repolarization is caused by closure of Ca2+ channels and prominent delayed rectifier K+ efflux (IKr, IKs).',
+      '5': 'Ventricular Phase 1 transient early repolarization is mediated by fast Na+ channel inactivation and transient outward K+ current (Ito).'
+    };
+
+    const btnCheckMatching = document.getElementById('btnCheckMatching');
+    const btnResetMatching = document.getElementById('btnResetMatching');
+    const matchingFeedbackBox = document.getElementById('matchingFeedbackBox');
+    const matchingBadge = document.getElementById('matchingBadge');
+
+    btnCheckMatching.addEventListener('click', () => {
+      let correct = 0;
+      let total = 5;
+      let feedbackHtml = '<h4 class="font-bold text-sm mb-2 text-white">Matching Evaluation Results:</h4><ul class="space-y-1.5 text-xs sm:text-sm">';
+
+      for (let i = 1; i <= total; i++) {
+        const select = document.getElementById(`match-${i}`);
+        const val = select.value;
+        const expected = matchingSolution[`match-${i}`];
+        if (val === expected) {
+          correct++;
+          feedbackHtml += `<li class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1.5"></i><strong>Item ${i}: Correct (${expected})</strong> - ${matchingRationales[i]}</li>`;
+        } else {
+          feedbackHtml += `<li class="text-rose-400"><i class="fa-solid fa-circle-xmark mr-1.5"></i><strong>Item ${i}: Incorrect.</strong> Correct answer is <strong>${expected}</strong> - ${matchingRationales[i]}</li>`;
+        }
+      }
+      feedbackHtml += '</ul>';
+
+      matchingFeedbackBox.innerHTML = feedbackHtml;
+      matchingFeedbackBox.className = `mt-6 p-4 rounded-xl border ${correct === total ? 'bg-emerald-950/40 border-emerald-500/40' : 'bg-slate-900 border-slate-700'}`;
+      matchingFeedbackBox.classList.remove('hidden');
+
+      if (correct === total) {
+        matchingBadge.textContent = `Score: 5/5 (100%)`;
+        matchingBadge.className = 'text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/30';
+      } else {
+        matchingBadge.textContent = `Score: ${correct}/5`;
+        matchingBadge.className = 'text-xs bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full border border-amber-500/30';
+      }
+    });
+
+    btnResetMatching.addEventListener('click', () => {
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`match-${i}`).value = '';
+      }
+      matchingFeedbackBox.classList.add('hidden');
+      matchingBadge.textContent = 'Unsubmitted';
+      matchingBadge.className = 'text-xs bg-slate-800 text-slate-400 px-3 py-1 rounded-full border border-slate-700';
+    });
+
+    // Written reveal handlers
+    document.getElementById('btnRevealSA').addEventListener('click', () => {
+      document.getElementById('saModelAnswer').classList.toggle('hidden');
+    });
+
+    document.getElementById('btnRevealLA').addEventListener('click', () => {
+      document.getElementById('laModelAnswer').classList.toggle('hidden');
+    });
+
+    // Render MCQs
+    function initMCQs() {
+      renderQuickNav();
+      renderMCQs();
+      updateScoreDashboard();
+    }
+
+    function renderQuickNav() {
+      quickNavContainer.innerHTML = '';
+      mcqData.forEach((q) => {
+        const btn = document.createElement('button');
+        btn.id = `nav-btn-${q.id}`;
+        btn.className = 'w-7 h-7 rounded-md text-xs font-semibold flex items-center justify-center transition border border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600';
+        btn.textContent = q.id;
+        btn.addEventListener('click', () => {
+          const card = document.getElementById(`mcq-card-${q.id}`);
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.add('ring-2', 'ring-rose-500');
+            setTimeout(() => card.classList.remove('ring-2', 'ring-rose-500'), 1200);
+          }
+        });
+        quickNavContainer.appendChild(btn);
+      });
+    }
+
+    function renderMCQs() {
+      mcqContainer.innerHTML = '';
+
+      mcqData.forEach((item) => {
+        const isAnswered = userAnswers[item.id] !== undefined;
+        const selectedOptIdx = userAnswers[item.id];
+        const isCorrect = isAnswered && item.options[selectedOptIdx].isCorrect;
+
+        let isVisible = true;
+        if (currentFilter === 'incorrect') {
+          isVisible = isAnswered && !isCorrect;
+        } else if (currentFilter === 'unanswered') {
+          isVisible = !isAnswered;
+        }
+
+        const card = document.createElement('div');
+        card.id = `mcq-card-${item.id}`;
+        card.className = `bg-slate-900/90 rounded-2xl border border-slate-800 p-6 shadow-xl transition-all duration-300 ${isVisible ? 'block' : 'hidden'}`;
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <span class="inline-block text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-md border border-rose-500/20 mb-2">
+                Question ${item.id} of 50 &bull; ${item.topic}
+              </span>
+              <h3 class="text-base sm:text-lg font-semibold text-white leading-snug">
+                ${item.question}
+              </h3>
+            </div>
+            <div id="badge-q-${item.id}">
+              ${isAnswered 
+                ? (isCorrect 
+                    ? '<span class="text-emerald-400 text-xs sm:text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Correct</span>'
+                    : '<span class="text-rose-400 text-xs sm:text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-circle-xmark"></i> Incorrect</span>')
+                : '<span class="text-slate-500 text-xs font-medium">Pending</span>'}
+            </div>
+          </div>
+
+          <!-- Options Grid -->
+          <div class="space-y-2.5 mt-4" id="options-group-${item.id}">
+            ${item.options.map((opt, optIdx) => {
+              let optClasses = 'w-full text-left p-3.5 rounded-xl border text-xs sm:text-sm font-medium transition flex items-start space-x-3 cursor-pointer ';
+              
+              if (!isAnswered) {
+                optClasses += 'border-slate-800 bg-slate-950/60 hover:bg-slate-800/60 text-slate-200 hover:border-slate-600';
+              } else {
+                if (opt.isCorrect) {
+                  optClasses += 'border-emerald-500/60 bg-emerald-950/40 text-emerald-100 font-semibold ring-1 ring-emerald-500/30';
+                } else if (selectedOptIdx === optIdx) {
+                  optClasses += 'border-rose-500/60 bg-rose-950/40 text-rose-100 ring-1 ring-rose-500/30';
+                } else {
+                  optClasses += 'border-slate-800/80 bg-slate-950/40 text-slate-500 opacity-60 cursor-default';
+                }
+              }
+
+              return `
+                <button 
+                  type="button" 
+                  data-qid="${item.id}" 
+                  data-oidx="${optIdx}" 
+                  class="option-btn ${optClasses}"
+                  ${isAnswered ? 'disabled' : ''}
+                >
+                  <span class="w-6 h-6 rounded-md flex-shrink-0 flex items-center justify-center font-bold text-xs ${
+                    isAnswered && opt.isCorrect ? 'bg-emerald-500 text-white' :
+                    isAnswered && selectedOptIdx === optIdx ? 'bg-rose-500 text-white' : 'bg-slate-800 text-slate-300'
+                  }">
+                    ${opt.letter}
+                  </span>
+                  <span class="leading-relaxed pt-0.5">${opt.text}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Explanation Box -->
+          <div id="explanation-box-${item.id}" class="${isAnswered ? 'block' : 'hidden'} mt-5 pt-4 border-t border-slate-800">
+            <div class="p-4 rounded-xl ${isCorrect ? 'bg-emerald-950/30 border border-emerald-500/30' : 'bg-rose-950/30 border border-rose-500/30'}">
+              <div class="flex items-center gap-2 mb-2 font-semibold text-xs sm:text-sm ${isCorrect ? 'text-emerald-300' : 'text-rose-300'}">
+                <i class="fa-solid ${isCorrect ? 'fa-circle-info' : 'fa-triangle-exclamation'}"></i>
+                <span>${isCorrect ? 'Correct Decision Rationale' : 'Distractor Analysis & Review'}</span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-2">
+                ${isAnswered ? item.options[selectedOptIdx].rationale : ''}
+              </p>
+              ${!isCorrect && isAnswered ? `
+                <div class="mt-2 pt-2 border-t border-slate-800 text-xs text-emerald-400">
+                  <span class="font-bold text-slate-200">Correct Option (${item.options.find(o => o.isCorrect).letter}): </span>${item.options.find(o => o.isCorrect).rationale}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+
+        mcqContainer.appendChild(card);
+      });
+
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const qid = parseInt(btn.getAttribute('data-qid'), 10);
+          const oidx = parseInt(btn.getAttribute('data-oidx'), 10);
+          handleAnswerSelect(qid, oidx);
+        });
+      });
+    }
+
+    function handleAnswerSelect(qid, oidx) {
+      if (userAnswers[qid] !== undefined) return;
+      userAnswers[qid] = oidx;
+      renderMCQs();
+      updateScoreDashboard();
+
+      const question = mcqData.find(q => q.id === qid);
+      const isCorrect = question.options[oidx].isCorrect;
+      const navPill = document.getElementById(`nav-btn-${qid}`);
+      if (navPill) {
+        if (isCorrect) {
+          navPill.className = 'w-7 h-7 rounded-md text-xs font-bold flex items-center justify-center transition bg-emerald-600 text-white border-none shadow-sm';
+        } else {
+          navPill.className = 'w-7 h-7 rounded-md text-xs font-bold flex items-center justify-center transition bg-rose-600 text-white border-none shadow-sm';
+        }
+      }
+    }
+
+    function updateScoreDashboard() {
+      const answeredKeys = Object.keys(userAnswers);
+      const totalAnswered = answeredKeys.length;
+      let correctCount = 0;
+
+      answeredKeys.forEach(id => {
+        const q = mcqData.find(item => item.id === parseInt(id, 10));
+        const chosenIdx = userAnswers[id];
+        if (q && q.options[chosenIdx].isCorrect) {
+          correctCount++;
+        }
+      });
+
+      const incorrectCount = totalAnswered - correctCount;
+      const unansweredCount = mcqData.length - totalAnswered;
+      const percent = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+
+      headerScore.textContent = `${correctCount} / ${totalAnswered} (${percent}%)`;
+      quizProgressBar.style.width = `${(totalAnswered / mcqData.length) * 100}%`;
+
+      answeredCounterBadge.textContent = `${totalAnswered}/${mcqData.length} Answered`;
+      missedCountSpan.textContent = incorrectCount;
+      unansweredCountSpan.textContent = unansweredCount;
+
+      if (totalAnswered === mcqData.length) {
+        resultsSection.classList.remove('hidden');
+        document.getElementById('finalTotal').textContent = `${correctCount}/${mcqData.length}`;
+        const totalPct = Math.round((correctCount / mcqData.length) * 100);
+        document.getElementById('finalPercent').textContent = `${totalPct}%`;
+        const passElem = document.getElementById('finalPassed');
+        if (totalPct >= 70) {
+          passElem.textContent = 'Pass';
+          passElem.className = 'text-2xl font-black text-emerald-400';
+        } else {
+          passElem.textContent = 'Remediate';
+          passElem.className = 'text-2xl font-black text-rose-400';
+        }
+      } else {
+        resultsSection.classList.add('hidden');
+      }
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition border border-slate-700';
+        });
+        btn.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white shadow-sm transition';
+        currentFilter = btn.getAttribute('data-filter');
+        renderMCQs();
+      });
+    });
+
+    function resetMCQs() {
+      for (const key in userAnswers) {
+        delete userAnswers[key];
+      }
+      currentFilter = 'all';
+      filterButtons.forEach((b, idx) => {
+        b.className = idx === 0 
+          ? 'filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white shadow-sm transition'
+          : 'filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition border border-slate-700';
+      });
+      initMCQs();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    resetAllBtn.addEventListener('click', () => {
+      resetMCQs();
+      btnResetMatching.click();
+      document.getElementById('saAnswerInput').value = '';
+      document.getElementById('laAnswerInput').value = '';
+      document.getElementById('saModelAnswer').classList.add('hidden');
+      document.getElementById('laModelAnswer').classList.add('hidden');
+    });
+
+    restartBtn.addEventListener('click', resetMCQs);
+
+    // Download Single-File Offline HTML Webpage
+    downloadHtmlBtn.addEventListener('click', () => {
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Cardiovascular_Physiology_50Q_Exam.html";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+
+    // Initial Execution
+    initMCQs();
+  </script>
+</body>
+</html>
